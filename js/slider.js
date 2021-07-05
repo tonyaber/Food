@@ -11,6 +11,10 @@ const sliders = document.querySelectorAll('.offer__slide'),
     sliderField = document.querySelector('.offer__slider-inner'),
     widthSlider = window.getComputedStyle(sliderWrapper).width;
 
+const deleteNotDigits = (str) => {
+    return +str.replace(/\D/g, '');
+};
+
 const addZeroForIndex = (index) => {
     if (sliders.length < 10) {
         firstNumberOfSlider.textContent = `0${index}`;
@@ -91,11 +95,11 @@ sliders.forEach(slide => slide.style.width = widthSlider);
 changeIndexSlider(0);
 
 next.addEventListener('click', () => {
-    if (offset == (+widthSlider.slice(0, -2) * (sliders.length - 1))) {
+    if (offset == (deleteNotDigits(widthSlider) * (sliders.length - 1))) {
         offset = 0;
     }
     else {
-        offset += +widthSlider.slice(0, -2);
+        offset += deleteNotDigits(widthSlider);
     }
     sliderField.style.transform = `translateX(-${offset}px)`;
 
@@ -105,10 +109,10 @@ next.addEventListener('click', () => {
 
 prev.addEventListener('click', () => {
     if (offset == 0) {
-        offset = +widthSlider.slice(0, -2) * (sliders.length - 1);
+        offset = deleteNotDigits(widthSlider) * (sliders.length - 1);
     }
     else {
-        offset -= +widthSlider.slice(0, -2);
+        offset -= deleteNotDigits(widthSlider);
     }
     sliderField.style.transform = `translateX(-${offset}px)`;
     changeIndexSlider(-1);
@@ -120,7 +124,7 @@ indicators.addEventListener('click', (evt) => {
     const sliderTo = evt.target.getAttribute('data-slide-to');
     sliderIndex = +sliderTo;
     changeOpasityForDots(sliderTo);
-    offset = +widthSlider.slice(0, -2) * (sliderTo - 1);
+    offset = +widthSlider.replace(/\D/g, '') * (sliderTo - 1);
     sliderField.style.transform = `translateX(-${offset}px)`;
     addZeroForIndex(sliderTo);
 });

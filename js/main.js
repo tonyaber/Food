@@ -4,6 +4,8 @@ import './modal.js';
 import { getResource, bindPostData } from './fetch.js';
 import { MenuCard } from './menuCard.js';
 import './slider.js';
+import './calculate.js';
+
 window.addEventListener('DOMContentLoaded', function () {
     hideContent();
     showContent();
